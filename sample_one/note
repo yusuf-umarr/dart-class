@@ -1,0 +1,489 @@
+Dart is an open-source, class-based programming language developed by Google. It was created with a focus on building web and mobile applications. Dart is often associated with the Flutter framework, which is a popular toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase. Flutter uses Dart as its primary language.
+
+Flutter is an open source framework to create high quality, high performance mobile applications across mobile operating systems - Android and iOS. It provides a simple, powerful, efficient and easy to understand SDK to write mobile application in Google’s own language, Dart. This tutorial walks through the basics of Flutter framework, installation of Flutter SDK, setting up Android Studio to develop Flutter based application, architecture of Flutter framework and developing all type of mobile applications using Flutter framework.
+
+other framework for creating a mobile app, include 
+react-native: cross-platform (android, ios),
+kotlin -android
+java - android,
+swift - ios,
+xamarin - cross-platform,\
+etc.
+
+
+Advantage of cross-platform (flutter) over natives
+Single Codebase: Flutter allows you to write code once and run it on multiple platforms (iOS, Android, web, desktop, etc.), which significantly reduces development effort and time.
+
+Cost-Effective: Developing with Flutter can be more cost-effective for businesses because they can maintain a single codebase instead of separate ones for each platform.
+
+Disavantages:
+
+Larger App Size: Flutter apps tend to be larger in size compared to native apps
+Longer Compilation Times: Flutter's compilation times during development can be longer compared to native development, 
+Performance Limitations: While Flutter apps can achieve native-level performance, certain highly specialized or graphics-intensive apps may still perform better when written natively.
+
+
+
+part2.
+
+In Dart, variables are used to store data that can be manipulated and accessed within your programs. Dart is a statically-typed language, which means you need to specify the data type of a variable when declaring it. Here are some examples of declaring and using variables in Dart:
+* 		Declaring Variables:
+* 		You can declare variables using the 
+var, 
+final, or 
+const keywords.
+
+some examples:
+// Using 'var' to declare and initialize a variable
+
+var name = "Alice"; // String 
+var age = 30; //int
+var score =10.5; //double
+var languages = ["yoruba", "english", "housa"]; //list
+var isStudent = true; //boolean
+studentData= {"name":"Ahkeem", "age":"20"} // map
+
+
+
+// Using 'final' to declare a constant variable
+final int age = 30;
+
+// Using 'const' to declare a compile-time constant
+const double piValue = 3.141592;
+
+
+Variable Types:
+Dart supports various types of variables, including numbers, strings, booleans, lists, maps, and user-defined classes. Here are some examples:
+
+int age = 25;  //  var age = 20
+double salary = 50000.50; 
+String message = "Hello, Dart! i am software engineer"; 
+bool isStudent = true;
+
+List<String> fruits = ["apple", "banana", "cherry", 20];
+
+List<dynamic> someData = ["yoruba", "english", 24];
+
+List someData = ["yoruba", "english", 24];
+
+
+Map<String, int> scores = {
+  "Alice": 95,
+  "Bob": 88,
+  "Carol": "you",
+};
+
+Map<String, dynamic> studentData= {
+    "name":"Ahkeem",
+     "age":20,
+     "score": 100.6
+}
+
+
+
+
+--Variable Assignment:
+You can assign values to variables using the assignment operator (=). Dart is statically-typed, so you cannot change the type of a variable once it's declared.
+
+var number = 42; // Declaring and initializing 'number'
+number = 20; // Reassigning 'number' with a new value
+
+
+-- Dynamic Typing:
+If you want a variable to be dynamically typed and accept values of any type, you can use the dynamic type.
+
+dynamic dynamicVar = "This can be a string";
+dynamicVar = 42; // Now it can hold an integer;
+dynamic score = 20.5;
+dynamic isStudent = true;
+
+--Null Safety:
+Dart has introduced null safety with the ? and ! operators to handle nullable variables. A variable with a ? can be null, while a variable with a ! asserts that it is non-null.
+
+String? nullableString = null;
+String nonNullString = "Dart!";
+
+int lenght;
+
+print(lenght?)// null
+
+print(nullableString?.length); // Safely access the length (null-safe)
+
+print(nonNullString.length);    // Directly access the length
+
+--Final and Const:
+The final keyword is used for declaring variables that can be assigned only once. The const keyword is used for compile-time constant variables.
+
+final name = "Alice"; // Value can't be changed
+
+const piValue = 3.141592; // A compile-time constant
+
+--String Interpolation:
+Dart allows you to concatenate strings and variables using string interpolation.
+
+String name = "Alice";
+int age = 30;
+
+print("My name is $name, and I am $age years old.");
+
+
+
+
+Object-oriented programming (OOP) is a way of organizing and designing software using objects, which are instances of classes. Dart is a type of OOP.
+These OOP principles in Dart help you design, structure, and manage your code by promoting modularity, reusability, and maintainability. They also enable you to model real-world concepts and relationships effectively in your software.
+
+Here are the key OOP concepts as they relate to Dart:
+
+1. Classes: In Dart, a class is a blueprint for creating objects. It defines the attributes (fields) and behaviors (methods) that objects of the class will have. You can create your own custom classes to model real-world entities or abstract concepts. 
+
+For example:
+
+
+class Person {
+  String name;
+  int age;
+
+  void sayHello() {
+    print("Hello, my name is $name, and I am $age years old.");
+  }
+
+  dynamic sayHello() {
+    print("Hello, my name is $name, and I am $age years old.");
+    return ""
+  }
+}
+
+2. Objects: Objects are instances of classes. They represent specific data with their attributes and can perform actions using their methods. You create objects from classes like this:
+
+var p1 = Person();
+Person p1 = Person();
+
+p1.name = "Alice";
+p1.age = 30;
+p1.sayHello();
+
+
+3. Encapsulation:  Dart allows you to control the visibility of class members using private (_) and public modifiers.
+
+class Person {
+  String _name; // Private attribute
+
+
+  int age; // Public attribute
+
+  Person(this._name, this.age); // Constructor
+
+  void sayHello() {
+    print("Hello, my name is $_name, and I am $age years old.");
+  }
+}
+
+4. Inheritance: Inheritance allows you to create new classes that are based on existing classes, inheriting their attributes and behaviors. Dart supports single inheritance, meaning a class can inherit from only one superclass.
+
+class Student extends Person {
+  String school;
+
+  Student(String name, int age, this.school) : super(name, age); //constructor 
+
+  void study() {
+    print("$name is studying at $school.");
+  }
+
+  print(name) == out=> Alice
+}
+
+5. Polymorphism: Polymorphism enables objects of different classes to be treated as objects of a common superclass. In Dart, this is achieved through method overriding.
+
+
+class Animal {
+    String name = ahkeem;
+  void makeSound() {
+    print("Some generic animal sound.");
+  }
+}
+
+
+class Dog extends Animal {
+  @override
+  name =lawal;
+  void makeSound() {
+    print("Woof!");
+  }
+  print(name)  output==>lawal
+}
+
+class Cat extends Animal {
+  @override
+  void makeSound() {
+    print("Meow!");
+  }
+}
+
+
+
+
+
+Layout in flutter
+
+The core of Flutter’s layout mechanism is widgets. In Flutter, almost everything is a widget—even layout models are widgets. The images, icons, and text that you see in a Flutter app are all widgets. But things you don’t see are also widgets, such as the rows, columns, and grids that arrange, constrain, and align the visible widgets.
+
+A Flutter app is itself a widget, and most widgets have a build() method. Instantiating and returning a widget in the app’s build() method displays the widget.
+
+1. Material apps
+For a Material app, you can use a Scaffold widget; it provides a default banner, background color, and has API for adding drawers, snack bars, and bottom sheets. Then you can add the Center widget directly to the body property for the home page.
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter layout demo',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Flutter layout demo'),
+        ),
+        body: const Center(
+          child: Text('Hello World'),
+        ),
+      ),
+    );
+  }
+}
+
+2. Non material widget
+By default a non-Material app doesn’t include an AppBar, title, or background color. If you want these features in a non-Material app, you have to build them yourself. This app changes the background color to white and the text to dark grey to mimic a Material app.
+
+
+3.Lay out multiple widgets vertically and horizontally
+One of the most common layout patterns is to arrange widgets vertically or horizontally. 
+You can use a Row widget to arrange widgets horizontally, and a Column widget to arrange widgets vertically.
+To create a row or column in Flutter, you add a list of children widgets to a Row or Column widget. In turn, each child can itself be a row or column, and so on. 
+
+point to note:
+Row and Column are two of the most commonly used layout patterns.
+Row and Column each take a list of child widgets.
+A child widget can itself be a Row, Column, or other complex widget.
+You can specify how a Row or Column aligns its children, both vertically and horizontally.
+You can stretch or constrain specific child widgets.
+You can specify how child widgets use the Row’s or Column’s available space.
+
+ Row and Column are basic primitive widgets for horizontal and vertical layouts—these low-level widgets allow for maximum customization. Flutter also offers specialized, higher level widgets that might be sufficient for your needs. For example, instead of Row you might prefer ListTile, an easy-to-use widget with properties for leading and trailing icons, and up to 3 lines of text. Instead of Column, you might prefer ListView, a column-like layout that automatically scrolls if its content is too long to fit the available space. For more information, 
+
+
+ Aligning widgets
+You control how a row or column aligns its children using the mainAxisAlignment and crossAxisAlignment properties. For a row, the main axis runs horizontally and the cross axis runs vertically. For a column, the main axis runs vertically and the cross axis runs horizontally.
+
+
+Row(
+  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  children: [
+    Image.asset('images/pic1.jpg'),
+    
+    Image.asset('images/pic2.jpg'),
+    Image.asset('images/pic3.jpg'),
+  ],
+);
+
+Column(
+  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  children: [
+    Image.asset('images/pic1.jpg'),
+    Image.asset('images/pic2.jpg'),
+    Image.asset('images/pic3.jpg'),
+  ],
+);
+
+Sizing widgets
+When a layout is too large to fit a device, a yellow and black striped pattern appears along the affected edge. (overflow error)
+
+
+Row(
+  crossAxisAlignment: CrossAxisAlignment.center,
+  children: [
+    Expanded(
+      child: Image.asset('images/pic1.jpg'),
+    ),
+    Expanded(
+      child: Image.asset('images/pic2.jpg'),
+    ),
+    Expanded(
+      child: Image.asset('images/pic3.jpg'),
+    ),
+  ],
+);
+
+Perhaps you want a widget to occupy twice as much space as its siblings. For this, use the Expanded widget flex property, an integer that determines the flex factor for a widget. The default flex factor is 1. The following code sets the flex factor of the middle image to 2:
+
+
+Row(
+  crossAxisAlignment: CrossAxisAlignment.center,
+  children: [
+    Expanded(
+      child: Image.asset('images/pic1.jpg'),
+    ),
+    Expanded(
+      flex: 2,
+      child: Image.asset('images/pic2.jpg'),
+    ),
+    Expanded(
+      child: Image.asset('images/pic3.jpg'),
+    ),
+  ],
+);
+
+
+Packing widgets
+By default, a row or column occupies as much space along its main axis as possible, but if you want to pack the children closely together, set its mainAxisSize to MainAxisSize.min. The following example uses this property to pack the star icons together.
+
+
+Row(
+  mainAxisSize: MainAxisSize.min,
+  children: [
+    Icon(Icons.star, color: Colors.green[500]),
+    Icon(Icons.star, color: Colors.green[500]),
+    Icon(Icons.star, color: Colors.green[500]),
+    const Icon(Icons.star, color: Colors.black),
+    const Icon(Icons.star, color: Colors.black),
+  ],
+)
+
+
+Common layout widgets
+Flutter has a rich library of layout widgets. Here are a few of those most commonly used. 
+
+The following widgets fall into two categories: 
+standard widgets from the widgets library, and specialized widgets from the Material library. Any app can use the widgets library but only Material apps can use the Material Components library.
+
+(a), Standard widgets
+(i).Container: Adds padding, margins, borders, background color, or other decorations to a widget.
+
+GridView: Lays widgets out as a scrollable grid.
+ListView: Lays widgets out as a scrollable list.
+Stack: Overlaps a widget on top of another.
+
+(b). Material widgets
+Card: Organizes related info into a box with rounded corners and a drop shadow.
+ListTile: Organizes up to 3 lines of text, and optional leading and trailing icons, into a row.
+
+(ii).  GridView is use to lay widgets out as a two-dimensional list. GridView provides two pre-fabricated lists, or you can build your own custom grid. When a GridView detects that its contents are too long to fit the render box, it automatically scrolls.
+
+
+Widget _buildGrid() => GridView.extent(
+    maxCrossAxisExtent: 150,
+    padding: const EdgeInsets.all(4),
+    mainAxisSpacing: 4,
+    crossAxisSpacing: 4,
+    children: _buildGridTileList(30));
+
+// The images are saved with names pic0.jpg, pic1.jpg...pic29.jpg.
+// The List.generate() constructor allows an easy way to create
+// a list when objects have a predictable naming pattern.
+List<Container> _buildGridTileList(int count) => List.generate(
+    count, (i) => Container(child: Image.asset('images/pic$i.jpg')));
+
+(iii). 
+ListView: a column-like widget, automatically provides scrolling when its content is too long for its render box.
+
+Listview: a specialized Column for organizing a list of boxes
+Can be laid out horizontally or vertically
+Detects when its content won’t fit and provides scrolling
+Less configurable than Column, but easier to use and supports scrolling
+
+
+(iv). Stack
+Use Stack to arrange widgets on top of a base widget—often an image. The widgets can completely or partially overlap the base widget.
+
+Summary (Stack)
+Use for widgets that overlap another widget
+The first widget in the list of children is the base widget; subsequent children are overlaid on top of that base widget
+A Stack’s content can’t scroll
+You can choose to clip children that exceed the render box
+
+Widget _buildStack() {
+  return Stack(
+    alignment: const Alignment(0.6, 0.6),
+    children: [
+      const CircleAvatar(
+        backgroundImage: AssetImage('images/pic.jpg'),
+        radius: 100,
+      ),
+      Container(
+        decoration: const BoxDecoration(
+          color: Colors.black45,
+        ),
+        child: const Text(
+          'Mia B',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+(v). Card
+A Card, from the Material library, contains related nuggets of information and can be composed from almost any widget, but is often used with ListTile. Card has a single child, but its child can be a column, row, list, grid, or other widget that supports multiple children. By default, a Card shrinks its size to 0 by 0 pixels. You can use SizedBox to constrain the size of a card.
+
+In Flutter, a Card features slightly rounded corners and a drop shadow, giving it a 3D effect. Changing a Card’s elevation property allows you to control the drop shadow effect. Setting the elevation to 24, for example, visually lifts the Card further from the surface and causes the shadow to become more dispersed. For a list of supported elevation values, see Elevation in the Material guidelines. Specifying an unsupported value disables the drop shadow entirely.
+
+Summary (Card)
+Implements a Material card
+Used for presenting related nuggets of information
+Accepts a single child, but that child can be a Row, Column, or other widget that holds a list of children
+Displayed with rounded corners and a drop shadow
+A Card’s content can’t scroll
+From the Material library
+
+
+Widget _buildCard() {
+  return SizedBox(
+    height: 210,
+    child: Card(
+      child: Column(
+        children: [
+          ListTile(
+            title: const Text(
+              '1625 Main Street',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            subtitle: const Text('My City, CA 99984'),
+            leading: Icon(
+              Icons.restaurant_menu,
+              color: Colors.blue[500],
+            ),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text(
+              '(408) 555-1212',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            leading: Icon(
+              Icons.contact_phone,
+              color: Colors.blue[500],
+            ),
+          ),
+          ListTile(
+            title: const Text('costa@example.com'),
+            leading: Icon(
+              Icons.contact_mail,
+              color: Colors.blue[500],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+(vi).  ListTile is a specialized row widget from the Material library, for an easy way to create a row containing up to 3 lines of text and optional leading and trailing icons. ListTile is most commonly used in Card or ListView, but can be used elsewhere.
+
+Summary (ListTile)
+A specialized row that contains up to 3 lines of text and optional icons
+Less configurable than Row, but easier to use
+From the Material library
+Examples (ListTile)

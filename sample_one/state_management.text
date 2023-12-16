@@ -1,0 +1,29 @@
+#Inherited Widget
+
+In Flutter, widgets are like building blocks of your user interface. Now, imagine you have a piece of information or data that multiple parts of your app need to access. Instead of passing this information individually to each widget, which can be tedious, you can use an InheritedWidget.
+
+Think of InheritedWidget as a special container that holds some data and can pass that data down to all the widgets underneath it in the widget tree. It's like a shared information box that makes it easy for widgets to get the information they need without passing it around explicitly.
+
+Here's a simple analogy:
+
+Imagine you have a family. The InheritedWidget is like a family treasure chest kept in the living room. Inside this chest, there's valuable information that the whole family might need.
+
+Now, each room in your house represents a different part of your app's user interface. Instead of carrying the treasure chest to each room whenever someone needs something from it, you just tell each room that they can access the treasure chest in the living room.
+
+So, in Flutter terms, if you have some data (let's say, a theme or user preferences) that many widgets in your app need, you can wrap your app's root widget with an InheritedWidget. This way, any widget below in the widget tree can easily access that shared data without passing it explicitly from one widget to another.
+
+In summary, InheritedWidget is like a shared container that holds important information, making it convenient for different parts of your app to access and use that information without the need for direct communication between every widget. It helps keep your code clean and makes it easier to manage shared data across your app.
+
+
+###State management
+Imagine you're building a mobile app with Flutter, and your app has different screens or pages. Now, think of the "state" as the current condition or information your app is in at any given moment. It's like the snapshot of your app at a specific point in time.
+
+Let's take an example: You have a counter on your app, and when you tap a button, the number on the counter increases. The number on the counter is a piece of information, and its value is part of the app's current state.
+
+Now, imagine you have two different screens in your app. On the first screen, you see the counter, and on the second screen, you have some other information. When you switch between these screens, you want the app to remember the current state, so when you go back to the first screen, the counter still shows the correct number.
+
+Here's where state management comes into play. It's like having a system to keep track of and share the current state of your app across different parts of your app. So, when you tap the button to increase the counter on one screen, the other screen also knows about this change and updates accordingly when you go back to it.
+
+Flutter provides different ways to manage this state. It's like choosing the best method to share and keep track of information so that your app behaves as expected. Some common approaches in Flutter include using widgets to manage local state or using external packages like Provider, Riverpod, or Bloc for more complex applications.
+
+In a nutshell, state management in Flutter is about maintaining and sharing the current condition or information of your app across different parts of your user interface, ensuring a smooth and consistent user experience.
