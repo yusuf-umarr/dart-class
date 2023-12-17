@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sample_one/common_widgets/custom_btn.dart';
+import 'package:sample_one/providers/counter_provider.dart';
 
 class ScreenTwo extends StatelessWidget {
   ScreenTwo({super.key});
@@ -16,6 +18,8 @@ class ScreenTwo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final providerWatch = context.watch<CounterProvider>();
+    final providerRead = context.watch<CounterProvider>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Screen two"),
@@ -26,25 +30,29 @@ class ScreenTwo extends StatelessWidget {
           children: [
             const ListTile(
               leading: Text("s/n"),
-              title: Text("product 1"),
+              title: Text("products"),
               trailing: Text("20"),
             ),
             const Divider(
               color: Colors.green,
             ),
-            const ListTile(
-              leading: Text("1"),
-              title: Text("product 1"),
-              trailing: Text("20"),
+            ListTile(
+              leading: const Text("1"),
+              title: Text(providerWatch.productOne),
+              trailing: InkWell(
+                  onTap: () {
+                    providerRead.updateProductOne();
+                  },
+                  child: Text("update")),
             ),
             const ListTile(
               leading: Text("2"),
-              title: Text("product 1"),
+              title: Text("product 2"),
               trailing: Text("20"),
             ),
             const ListTile(
               leading: Text("3"),
-              title: Text("product 1"),
+              title: Text("product 3"),
               trailing: Text("20"),
             ),
             const Divider(
@@ -63,11 +71,18 @@ class ScreenTwo extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
+            // Text("screen two counter:${providerWatch.counter}"),
+
+            Text("email: ${providerWatch.email}"),
+            Text("password: ${providerWatch.password}"),
             CustomButton(
-              btnName: "Checkout",
+              btnName: "Decrement",
               textColor: Colors.white,
-              btnColor: Colors.blue,
-              onPressed: () {},
+              btnColor: providerWatch.isActive ? Colors.blue : Colors.red,
+              onPressed: () {
+                // providerRead.decrementCounter();
+                providerRead.toggleColor();
+              },
             )
           ],
         ),

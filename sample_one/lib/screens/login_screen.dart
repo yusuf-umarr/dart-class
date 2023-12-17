@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sample_one/common_widgets/custom_btn.dart';
 import 'package:sample_one/common_widgets/custom_textfield.dart';
+import 'package:sample_one/providers/counter_provider.dart';
 import 'package:sample_one/screens/screen_two.dart';
 
 class LoginScreen extends StatelessWidget {
   final String? userIputName;
-  LoginScreen({super.key,  this.userIputName});
+  LoginScreen({super.key, this.userIputName});
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -14,6 +16,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final providerWatch = context.watch<CounterProvider>();
+    final providerRead = context.read<CounterProvider>();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -61,7 +65,7 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Text("userIputName:${userIputName}"),
+              // Text("updated counter:${providerWatch.counter}"),
               const SizedBox(
                 height: 20,
               ),
@@ -69,32 +73,38 @@ class LoginScreen extends StatelessWidget {
               CustomTextField(
                 hint: "Enter email",
                 controller: emailController,
+                prefix: const Icon(Icons.mail_outline_outlined),
               ),
               const SizedBox(
                 height: 20,
               ),
               CustomTextField(
                 hint: "Enter password",
-                visibility: true,
+                visibility: providerWatch.isVisibility,
                 controller: passwordController,
+                prefix: const Icon(Icons.lock_open_outlined),
+                suffix: IconButton(
+                    onPressed: () {
+                      providerRead.togglePassword();
+                    },
+                    icon: Icon(
+                      providerWatch.isVisibility
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                    )),
               ),
               const SizedBox(
                 height: 40,
               ),
               CustomButton(
-                btnName: "Login",
+                btnName: providerWatch.state == AuthState.loading
+                    ? "Please wait ..."
+                    : "Login",
                 textColor: Colors.white,
                 btnColor: Colors.blue,
                 onPressed: () {
-                  print("emailController:${emailController.text}");
-                  print("passwordController:${passwordController.text}");
-
-                  // passwordController.clear();
-
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => ScreenTwo()));
+                  providerRead.login(
+                      emailController.text, passwordController.text, context);
                 },
               )
             ],
