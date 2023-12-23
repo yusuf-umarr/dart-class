@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_one/common_widgets/custom_btn.dart';
 import 'package:sample_one/providers/counter_provider.dart';
+import 'package:sample_one/providers/update_provider.dart';
 
 class ScreenTwo extends StatelessWidget {
   ScreenTwo({super.key});
@@ -19,7 +20,9 @@ class ScreenTwo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final providerWatch = context.watch<CounterProvider>();
-    final providerRead = context.watch<CounterProvider>();
+    final providerRead = context.read<CounterProvider>();
+    final updateProviderWatch = context.watch<UpdateProvider>();
+    final updateProviderRead = context.read<UpdateProvider>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Screen two"),
@@ -28,6 +31,7 @@ class ScreenTwo extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
+            Text("global state value:${updateProviderWatch.ourNameValue}"),
             const ListTile(
               leading: Text("s/n"),
               title: Text("products"),
@@ -81,7 +85,9 @@ class ScreenTwo extends StatelessWidget {
               btnColor: providerWatch.isActive ? Colors.blue : Colors.red,
               onPressed: () {
                 // providerRead.decrementCounter();
-                providerRead.toggleColor();
+                // providerRead.toggleColor();
+
+                updateProviderRead.updateName();
               },
             )
           ],

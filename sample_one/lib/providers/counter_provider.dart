@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sample_one/screens/login_screen.dart';
 import 'package:sample_one/screens/screen_two.dart';
 
 enum AuthState { idle, loading, success, error }
@@ -21,6 +22,9 @@ class CounterProvider extends ChangeNotifier {
 
   String _password = "";
   String get password => _password;
+
+  String _name = '';
+  String get name => _name;
 
   AuthState _state = AuthState.idle;
   AuthState get state => _state;
@@ -55,14 +59,15 @@ class CounterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void login(String emailInput, String passwordInput, context) {
+  void login(
+    String emailInput,
+    String passwordInput,
+    BuildContext context,
+  ) {
     setAuthState(AuthState.loading);
 
-    _email = emailInput;
-    _password = passwordInput;
-
     Future.delayed(const Duration(seconds: 3), () {
-      if (_email == "yoo@gmail.com" && password == "ade12345") {
+      if (_email == emailInput.trim() && password == passwordInput.trim()) {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (BuildContext context) => ScreenTwo()),
@@ -83,6 +88,40 @@ class CounterProvider extends ChangeNotifier {
       }
     });
 
+    notifyListeners();
+  }
+
+  void register(
+    String userName,
+    String userEmail,
+    String userPassword,
+    BuildContext context,
+  ) {
+    setAuthState(AuthState.loading);
+    //saving user datils to the state provider
+    _name = userName.trim();
+    _email = userEmail.trim();
+    _password = userPassword.trim();
+
+    Future.delayed(Duration(seconds: 3), () {
+      if (userPassword.length >= 6) {
+        setAuthState(AuthState.success);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      } else {
+        setAuthState(AuthState.error);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.grey,
+            content: Text(
+              "Password not valid ",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        );
+      }
+    });
     notifyListeners();
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_one/providers/counter_provider.dart';
+import 'package:sample_one/providers/update_provider.dart';
 import 'package:sample_one/screens/login_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,10 +15,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int ourValue = 0;
+
   @override
   Widget build(BuildContext context) {
-    final providerWatch = context.watch<CounterProvider>();
-    final providerRead = context.read<CounterProvider>();
+    final providerWatch = context.watch<UpdateProvider>();
+    final providerRead = context.read<UpdateProvider>();
 
     return Scaffold(
       appBar: AppBar(
@@ -43,7 +46,8 @@ class _HomePageState extends State<HomePage> {
               'You have pushed the button this many times:',
             ),
             Text(
-              '${providerWatch.counter}',
+              providerWatch.ourNameValue,
+              // '${providerWatch.counter}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
@@ -51,7 +55,8 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          providerRead.incrementCounter();
+          providerRead.updateName();
+          // providerRead.incrementCounter();
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),

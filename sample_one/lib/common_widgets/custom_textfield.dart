@@ -5,12 +5,14 @@ class CustomTextField extends StatelessWidget {
   final bool visibility;
   final Widget? suffix;
   final Widget? prefix;
+  final dynamic validator;
   final TextEditingController controller;
   const CustomTextField(
       {super.key,
       required this.hint,
       this.visibility = false,
       required this.controller,
+      this.validator,
       this.suffix,
       this.prefix});
 
@@ -19,6 +21,7 @@ class CustomTextField extends StatelessWidget {
     return TextFormField(
       obscureText: visibility,
       controller: controller,
+      validator: validator,
       decoration: InputDecoration(
         hintText: hint,
         suffixIcon: suffix,

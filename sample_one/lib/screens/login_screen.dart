@@ -30,6 +30,18 @@ class LoginScreen extends StatelessWidget {
                 child: Image.asset("assets/arrow_back_btn.png")),
           ],
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => ScreenTwo(
+                           
+                            )));
+              },
+              icon: Icon(Icons.login))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20)
@@ -65,7 +77,7 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              // Text("updated counter:${providerWatch.counter}"),
+              // Text("ourName value:${nameFromHomeScreen}"),
               const SizedBox(
                 height: 20,
               ),
@@ -104,7 +116,10 @@ class LoginScreen extends StatelessWidget {
                 btnColor: Colors.blue,
                 onPressed: () {
                   providerRead.login(
-                      emailController.text, passwordController.text, context);
+                    emailController.text,
+                    passwordController.text,
+                    context,
+                  );
                 },
               )
             ],
