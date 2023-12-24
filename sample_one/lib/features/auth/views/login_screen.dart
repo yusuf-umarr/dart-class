@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_one/common_widgets/custom_btn.dart';
 import 'package:sample_one/common_widgets/custom_textfield.dart';
+import 'package:sample_one/core/app_color.dart';
 import 'package:sample_one/providers/counter_provider.dart';
-import 'package:sample_one/screens/screen_two.dart';
+import 'package:sample_one/features/home/views/screen_two.dart';
 
 class LoginScreen extends StatelessWidget {
   final String? userIputName;
@@ -40,11 +41,11 @@ class LoginScreen extends StatelessWidget {
                            
                             )));
               },
-              icon: Icon(Icons.login))
+              icon: const Icon(Icons.login))
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20)
+        padding:  const EdgeInsets.symmetric(horizontal: 20, vertical: 20)
             .copyWith(top: 50),
         child: SingleChildScrollView(
           child: Column(
@@ -57,12 +58,13 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Text(
+               const Text(
                 "Welcome back ",
                 style: TextStyle(
                     fontSize: 27,
                     fontWeight: FontWeight.w400,
-                    color: Colors.grey),
+                    color: AppColors.textGreyColor,
+                    ),
               ),
               const SizedBox(
                 height: 10,
@@ -109,7 +111,7 @@ class LoginScreen extends StatelessWidget {
                 height: 40,
               ),
               CustomButton(
-                btnName: providerWatch.state == AuthState.loading
+                btnName: providerWatch.state == CounterState.loading
                     ? "Please wait ..."
                     : "Login",
                 textColor: Colors.white,

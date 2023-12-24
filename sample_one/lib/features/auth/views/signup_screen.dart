@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_one/common_widgets/custom_btn.dart';
 import 'package:sample_one/common_widgets/custom_textfield.dart';
+import 'package:sample_one/features/auth/view_model/auth_view_model.dart';
 import 'package:sample_one/providers/counter_provider.dart';
-import 'package:sample_one/screens/screen_two.dart';
+import 'package:sample_one/features/home/views/screen_two.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
@@ -19,6 +20,8 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final providerWatch = context.watch<CounterProvider>();
     final providerRead = context.read<CounterProvider>();
+    final authViewModelRead = context.read<AuthViewModel>();
+    final authViewModelWatch = context.watch<AuthViewModel>();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -136,7 +139,7 @@ class SignUpScreen extends StatelessWidget {
                   height: 40,
                 ),
                 CustomButton(
-                  btnName: providerWatch.state == AuthState.loading
+                  btnName: authViewModelWatch.state == AuthState.loading
                       ? "Please wait ..."
                       : "Signup",
                   textColor: Colors.white,
@@ -145,7 +148,9 @@ class SignUpScreen extends StatelessWidget {
                     // final _providerRead = context.read<CounterProvider>();
 
                     if (_signupkey.currentState!.validate()) {
-                      providerRead.register(
+
+                      
+                      authViewModelRead.signupLogic(
                         nameController.text,
                         emailController.text,
                         passwordController.text,

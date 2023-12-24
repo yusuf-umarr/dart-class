@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_one/providers/counter_provider.dart';
 import 'package:sample_one/providers/update_provider.dart';
-import 'package:sample_one/screens/login_screen.dart';
+import 'package:sample_one/features/auth/views/login_screen.dart';
 
 class HomePage extends StatefulWidget {
   //mutable

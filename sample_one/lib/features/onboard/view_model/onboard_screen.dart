@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sample_one/screens/login_screen.dart';
+import 'package:sample_one/features/auth/views/login_screen.dart';
 
 class OnboardScreen extends StatelessWidget {
   const OnboardScreen({super.key});

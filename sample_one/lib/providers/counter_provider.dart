@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sample_one/screens/login_screen.dart';
-import 'package:sample_one/screens/screen_two.dart';
+import 'package:sample_one/features/auth/views/login_screen.dart';
+import 'package:sample_one/features/home/views/screen_two.dart';
 
-enum AuthState { idle, loading, success, error }
+enum CounterState { idle, loading, success, error }
 
 class CounterProvider extends ChangeNotifier {
   int _counter = 0;
@@ -26,10 +26,10 @@ class CounterProvider extends ChangeNotifier {
   String _name = '';
   String get name => _name;
 
-  AuthState _state = AuthState.idle;
-  AuthState get state => _state;
+  CounterState _state = CounterState.idle;
+  CounterState get state => _state;
 
-  setAuthState(AuthState state) {
+  setCounterState(CounterState state) {
     _state = state;
     notifyListeners();
   }
@@ -64,7 +64,7 @@ class CounterProvider extends ChangeNotifier {
     String passwordInput,
     BuildContext context,
   ) {
-    setAuthState(AuthState.loading);
+    setCounterState(CounterState.loading);
 
     Future.delayed(const Duration(seconds: 3), () {
       if (_email == emailInput.trim() && password == passwordInput.trim()) {
@@ -72,7 +72,7 @@ class CounterProvider extends ChangeNotifier {
           context,
           MaterialPageRoute(builder: (BuildContext context) => ScreenTwo()),
         );
-        setAuthState(AuthState.success);
+        setCounterState(CounterState.success);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -84,7 +84,7 @@ class CounterProvider extends ChangeNotifier {
             ),
           ),
         );
-        setAuthState(AuthState.error);
+        setCounterState(CounterState.error);
       }
     });
 
@@ -97,7 +97,7 @@ class CounterProvider extends ChangeNotifier {
     String userPassword,
     BuildContext context,
   ) {
-    setAuthState(AuthState.loading);
+    setCounterState(CounterState.loading);
     //saving user datils to the state provider
     _name = userName.trim();
     _email = userEmail.trim();
@@ -105,11 +105,11 @@ class CounterProvider extends ChangeNotifier {
 
     Future.delayed(Duration(seconds: 3), () {
       if (userPassword.length >= 6) {
-        setAuthState(AuthState.success);
+        setCounterState(CounterState.success);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => LoginScreen()));
       } else {
-        setAuthState(AuthState.error);
+        setCounterState(CounterState.error);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: Colors.grey,
