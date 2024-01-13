@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sample_one/common_widgets/custom_btn.dart';
 import 'package:sample_one/common_widgets/custom_textfield.dart';
 import 'package:sample_one/features/auth/view_model/auth_view_model.dart';
+import 'package:sample_one/features/auth/views/login_screen.dart';
 import 'package:sample_one/providers/counter_provider.dart';
 import 'package:sample_one/features/home/views/screen_two.dart';
 
@@ -42,7 +43,7 @@ class SignUpScreen extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (BuildContext context) => ScreenTwo()));
               },
-              icon: Icon(Icons.login))
+              icon: const Icon(Icons.login))
         ],
       ),
       body: Padding(
@@ -148,26 +149,41 @@ class SignUpScreen extends StatelessWidget {
                     // final _providerRead = context.read<CounterProvider>();
 
                     if (_signupkey.currentState!.validate()) {
-
-                      
                       authViewModelRead.signupLogic(
                         nameController.text,
                         emailController.text,
                         passwordController.text,
                         context,
                       );
-                      //
-                      print("every form in valid");
-                    } else {
-                      print("every thing not valid");
-                    }
 
-                    // providerRead.login(
-                    //   emailController.text,
-                    //   passwordController.text,
-                    //   context,
-                    // );
+                      passwordController.clear();
+                      //
+                    }
                   },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Already Registered?"),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()));
+                        },
+                        child: const Text(
+                          "Login",
+                          style: TextStyle(color: Colors.blue),
+                        )),
+                  ],
                 )
               ],
             ),

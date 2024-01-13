@@ -3,12 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:sample_one/features/auth/view_model/auth_view_model.dart';
 import 'package:sample_one/providers/counter_provider.dart';
 import 'package:sample_one/providers/update_provider.dart';
-import 'package:sample_one/features/home/views/design_one.dart';
-import 'package:sample_one/features/home/views/home_page.dart';
-import 'package:sample_one/features/auth/views/login_screen.dart';
-import 'package:sample_one/features/home/views/new_screen_one.dart';
-import 'package:sample_one/features/onboard/view_model/onboard_screen.dart';
-import 'package:sample_one/features/home/views/screen_two.dart';
 import 'package:sample_one/features/auth/views/signup_screen.dart';
 // import 'package:flutter/cupertino.dart'; for ios
 

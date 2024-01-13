@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sample_one/common_widgets/custom_btn.dart';
 import 'package:sample_one/common_widgets/custom_textfield.dart';
 import 'package:sample_one/core/app_color.dart';
+import 'package:sample_one/features/auth/view_model/auth_view_model.dart';
 import 'package:sample_one/providers/counter_provider.dart';
 import 'package:sample_one/features/home/views/screen_two.dart';
 
@@ -19,6 +20,8 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final providerWatch = context.watch<CounterProvider>();
     final providerRead = context.read<CounterProvider>();
+    final authProvider = context.read<AuthViewModel>();
+    final authProviderWatch = context.watch<AuthViewModel>();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -37,15 +40,13 @@ class LoginScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (BuildContext context) => ScreenTwo(
-                           
-                            )));
+                        builder: (BuildContext context) => ScreenTwo()));
               },
               icon: const Icon(Icons.login))
         ],
       ),
       body: Padding(
-        padding:  const EdgeInsets.symmetric(horizontal: 20, vertical: 20)
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20)
             .copyWith(top: 50),
         child: SingleChildScrollView(
           child: Column(
@@ -58,13 +59,13 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-               const Text(
+              const Text(
                 "Welcome back ",
                 style: TextStyle(
-                    fontSize: 27,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.textGreyColor,
-                    ),
+                  fontSize: 27,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.textGreyColor,
+                ),
               ),
               const SizedBox(
                 height: 10,
@@ -111,17 +112,18 @@ class LoginScreen extends StatelessWidget {
                 height: 40,
               ),
               CustomButton(
-                btnName: providerWatch.state == CounterState.loading
+                btnName: authProviderWatch.state == AuthState.loading
                     ? "Please wait ..."
                     : "Login",
                 textColor: Colors.white,
                 btnColor: Colors.blue,
                 onPressed: () {
-                  providerRead.login(
+                  authProvider.signInLogic(
                     emailController.text,
                     passwordController.text,
                     context,
                   );
+                  passwordController.clear();
                 },
               )
             ],
