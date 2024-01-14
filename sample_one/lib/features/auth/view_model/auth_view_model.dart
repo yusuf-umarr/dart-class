@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sample_one/features/auth/repository/auth_repository.dart';
 import 'package:sample_one/features/auth/views/login_screen.dart';
+import 'package:sample_one/features/home/models/comment_model.dart';
 import 'package:sample_one/features/home/views/screen_two.dart';
 
 enum AuthState { idle, loading, success, error }
@@ -8,20 +9,20 @@ enum AuthState { idle, loading, success, error }
 class AuthViewModel extends ChangeNotifier {
   AuthRepository _authRepository = AuthRepository();
 
-  String _email = "";
-  String get email => _email;
-
-  String _password = "";
-  String get password => _password;
-
-  String _name = '';
-  String get name => _name;
+  List<CommentModel> _allComments = [];
+  List<CommentModel> get allComment => _allComments;
 
   AuthState _state = AuthState.idle;
   AuthState get state => _state;
 
   setAuthState(AuthState state) {
     _state = state;
+    notifyListeners();
+  }
+
+  setComment(List<CommentModel> comment) {
+    _allComments = comment;
+
     notifyListeners();
   }
 
@@ -47,14 +48,14 @@ class AuthViewModel extends ChangeNotifier {
       return;
     }
 
-    var repsonse = await _authRepository.signupRepo(
+    var response = await _authRepository.signupRepo(
       userName.trim(),
       userEmail.trim(),
       userPassword.trim(),
     );
 
     setAuthState(AuthState.success);
-    if (repsonse!.statusCode == 200 || repsonse.statusCode == 201) {
+    if (response!.statusCode == 200 || response.statusCode == 201) {
       print("registration successful");
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -80,7 +81,7 @@ class AuthViewModel extends ChangeNotifier {
         SnackBar(
           backgroundColor: Colors.grey,
           content: Text(
-            repsonse.data,
+            response.data,
             textAlign: TextAlign.center,
             style: const TextStyle(color: Colors.white),
           ),
@@ -98,13 +99,13 @@ class AuthViewModel extends ChangeNotifier {
   ) async {
     setAuthState(AuthState.loading);
 
-    var repsonse = await _authRepository.signInRepo(
+    var response = await _authRepository.signInRepo(
       userEmail.trim(),
       userPassword.trim(),
     );
 
     setAuthState(AuthState.success);
-    if (repsonse!.statusCode == 200 || repsonse.statusCode == 201) {
+    if (response!.statusCode == 200 || response.statusCode == 201) {
       print("login successful");
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -132,12 +133,12 @@ class AuthViewModel extends ChangeNotifier {
       //take the use to  screen two
     } else {
       setAuthState(AuthState.error);
-      print(repsonse.data);
+      print(response.data);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: Colors.grey,
           content: Text(
-            repsonse.data,
+            response.data,
             textAlign: TextAlign.center,
             style: const TextStyle(color: Colors.white),
           ),
@@ -147,12 +148,25 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void logOut(context){
+//
+  void logOut(context) {
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+        (route) => false);
+  }
+//
 
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => LoginScreen()),
-            (route) => false);
+  void getComments() async {
 
+    var response = await _authRepository.getComment();
+
+    if (response!.statusCode == 200) {
+      // print(response.data);
+      setComment(response.data!);
+    } else {
+      print(response.data);
+    }
+    notifyListeners();
   }
 //
 }

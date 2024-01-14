@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_one/common_widgets/custom_btn.dart';
 import 'package:sample_one/features/auth/view_model/auth_view_model.dart';
+import 'package:sample_one/features/home/views/comment_page.dart';
 import 'package:sample_one/providers/counter_provider.dart';
 import 'package:sample_one/providers/update_provider.dart';
 
@@ -95,14 +96,21 @@ class ScreenTwo extends StatelessWidget {
               Text("email: ${providerWatch.email}"),
               Text("password: ${providerWatch.password}"),
               CustomButton(
-                btnName: "Decrement",
+                btnName: "Comment",
                 textColor: Colors.white,
                 btnColor: providerWatch.isActive ? Colors.blue : Colors.red,
                 onPressed: () {
                   // providerRead.decrementCounter();
                   // providerRead.toggleColor();
 
-                  updateProviderRead.updateName();
+                  // updateProviderRead.updateName();
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CommentPage(),
+                    ),
+                  );
                 },
               )
             ],
