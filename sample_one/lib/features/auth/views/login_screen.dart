@@ -21,7 +21,10 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final providerWatch = context.watch<CounterProvider>();
     final providerRead = context.read<CounterProvider>();
-    final authProvider = context.read<AuthViewModel>();
+    // final authProvider = context.read<AuthViewModel>();
+    final authProvider =  Provider.of<AuthViewModel>(context, listen: false);
+
+
     final authProviderWatch = context.watch<AuthViewModel>();
     return Scaffold(
       appBar: AppBar(

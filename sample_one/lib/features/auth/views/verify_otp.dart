@@ -143,7 +143,6 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                   log("pinController.text:${pinController.text}");
                   authProvider.verifyOtpLogic(
                     pinController.text,
-                    widget.email!,
                     context,
                   );
                   pinController.clear();

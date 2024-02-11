@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:sample_one/features/auth/models/user_model.dart';
 import 'package:sample_one/features/auth/repository/auth_repository.dart';
 import 'package:sample_one/features/auth/views/login_screen.dart';
 import 'package:sample_one/features/auth/views/verify_otp.dart';
 import 'package:sample_one/features/home/models/comment_model.dart';
 import 'package:sample_one/features/home/views/screen_two.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum AuthState { idle, loading, success, error }
 
@@ -15,6 +19,8 @@ class AuthViewModel extends ChangeNotifier {
 
   AuthState _state = AuthState.idle;
   AuthState get state => _state;
+
+  UserModel user = UserModel();
 
   setAuthState(AuthState state) {
     _state = state;
@@ -33,6 +39,9 @@ class AuthViewModel extends ChangeNotifier {
     String userPassword,
     BuildContext context,
   ) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('email', userEmail);
+
     setAuthState(AuthState.loading);
     if (userPassword.length < 6) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -99,6 +108,8 @@ class AuthViewModel extends ChangeNotifier {
     BuildContext context,
   ) async {
     setAuthState(AuthState.loading);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('email', userEmail);
 
     var response = await _authRepository.signInRepo(
       userEmail.trim(),
@@ -107,7 +118,13 @@ class AuthViewModel extends ChangeNotifier {
 
     setAuthState(AuthState.success);
     if (response!.statusCode == 200 || response.statusCode == 201) {
-      print("login successful");
+      // user = response.data;
+      // log("login successful:${user}");
+      // log("login successful:${user.token}");
+
+      // log("token :${response.data['token']}");
+
+      await prefs.setString('token', response.data['token']);
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -152,10 +169,30 @@ class AuthViewModel extends ChangeNotifier {
 //
   void verifyOtpLogic(
     String otp,
-    String email,
+    // String email,
     BuildContext context,
   ) async {
     setAuthState(AuthState.loading);
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String email = prefs.getString('email') ?? "";
+
+    // yusuffumar02@gmail.com
+
+    if (email == "") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.grey,
+          content: Text(
+            "email not found",
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
+
+      return;
+    }
 
     var response = await _authRepository.verifyOtpRepo(
       otp.trim(),
@@ -164,7 +201,7 @@ class AuthViewModel extends ChangeNotifier {
 
     setAuthState(AuthState.success);
     if (response!.statusCode == 200 || response.statusCode == 201) {
-      print("login successful");
+      // print("login successful");
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -284,6 +321,27 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
   }
 //
+
+
+
+  Future<bool> validateToken() async {
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token') ?? "";
+
+  
+    try {
+      if (token != "") {
+        return true; // Token is valid
+      } else {
+        return false; // Token is invalid
+      }
+    } catch (e) {
+      debugPrint('Error validating token: $e');
+      return false; // Error occurred during validation
+    }
+  }
+
 }
 
 

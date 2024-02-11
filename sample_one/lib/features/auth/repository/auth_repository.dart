@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:sample_one/core/constant/api_constant.dart';
+import 'package:sample_one/features/auth/models/user_model.dart';
 import 'package:sample_one/features/home/models/comment_model.dart';
 
 class AuthRepository {
@@ -68,11 +69,13 @@ class AuthRepository {
       if (response.statusCode == 200) {
         // print('Success Response body: ${response.body}');
         ////successfull
+        ///
+        //  final userModel = userModelFromJson(response.body);
 
         return ApiResponse(
           isError: false,
           statusCode: response.statusCode,
-          data: response.body,
+          data: jsonDecode(response.body),
         );
       } else {
         // print('Error Response body: ${response.body}');
@@ -107,7 +110,7 @@ class AuthRepository {
 
       var response = await http.post(uri, body: body, headers: headers);
 
-      log("response from otp:${response.body}");
+      // log("response from otp:${response.body}");
 
       if (response.statusCode == 200) {
         // print('Success Response body: ${response.body}');
@@ -138,7 +141,7 @@ class AuthRepository {
   Future<ApiResponse?> resendOptRepo(
     String email,
   ) async {
-    log("resendOptRepo called");
+    // log("resendOptRepo called");
     try {
       var uri =
           Uri.parse("https://behemoth-api-vercel.vercel.app/auth/resend-otp");
@@ -150,7 +153,7 @@ class AuthRepository {
 
       var response = await http.post(uri, body: body, headers: headers);
 
-      log("response from resend otp:${response.body}");
+      // log("response from resend otp:${response.body}");
 
       if (response.statusCode == 200) {
         // print('Success Response body: ${response.body}');
@@ -179,7 +182,7 @@ class AuthRepository {
 //
 
   Future<ApiResponse<List<CommentModel>>> getComment() async {
-    print("comment called");
+    // print("comment called");
     try {
       var uri =
           Uri.parse("https://jsonplaceholder.typicode.com/posts/1/comments");
