@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sample_one/features/auth/repository/auth_repository.dart';
 import 'package:sample_one/features/auth/views/login_screen.dart';
+import 'package:sample_one/features/auth/views/verify_otp.dart';
 import 'package:sample_one/features/home/models/comment_model.dart';
 import 'package:sample_one/features/home/views/screen_two.dart';
 
@@ -149,6 +150,121 @@ class AuthViewModel extends ChangeNotifier {
   }
 
 //
+  void verifyOtpLogic(
+    String otp,
+    String email,
+    BuildContext context,
+  ) async {
+    setAuthState(AuthState.loading);
+
+    var response = await _authRepository.verifyOtpRepo(
+      otp.trim(),
+      email.trim(),
+    );
+
+    setAuthState(AuthState.success);
+    if (response!.statusCode == 200 || response.statusCode == 201) {
+      print("login successful");
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.grey,
+          content: Text(
+            "Account verified successful",
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
+
+      Future.delayed(const Duration(microseconds: 100), () {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => LoginScreen()),
+            (route) => false);
+
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(builder: (BuildContext context) => ScreenTwo()),
+        // );
+      });
+
+      //take the use to  screen two
+    } else {
+      setAuthState(AuthState.error);
+      print(response.data);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.grey,
+          content: Text(
+            response.data,
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+      );
+    }
+    notifyListeners();
+  }
+
+//
+  void resendyOtpLogic(
+    String email,
+    BuildContext context,
+  ) async {
+    setAuthState(AuthState.loading);
+
+    var response = await _authRepository.resendOptRepo(
+      email.trim(),
+    );
+
+    setAuthState(AuthState.success);
+    if (response!.statusCode == 200 || response.statusCode == 201) {
+      print("otp resnt =====");
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.grey,
+          content: Text(
+            "Account verified successful",
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
+
+      Future.delayed(const Duration(microseconds: 100), () {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (context) => VerifyOtpScreen(
+                      email: email,
+                    )),
+            (route) => false);
+
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(builder: (BuildContext context) => ScreenTwo()),
+        // );
+      });
+
+      //take the use to  screen two
+    } else {
+      setAuthState(AuthState.error);
+      print(response.data);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.grey,
+          content: Text(
+            response.data,
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+      );
+    }
+    notifyListeners();
+  }
+
+//
   void logOut(context) {
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -157,7 +273,6 @@ class AuthViewModel extends ChangeNotifier {
 //
 
   void getComments() async {
-
     var response = await _authRepository.getComment();
 
     if (response!.statusCode == 200) {

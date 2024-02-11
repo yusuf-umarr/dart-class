@@ -1,24 +1,30 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_one/common_widgets/custom_btn.dart';
 import 'package:sample_one/common_widgets/custom_textfield.dart';
 import 'package:sample_one/core/app_color.dart';
 import 'package:sample_one/features/auth/view_model/auth_view_model.dart';
-import 'package:sample_one/features/auth/views/verify_otp.dart';
 import 'package:sample_one/providers/counter_provider.dart';
 import 'package:sample_one/features/home/views/screen_two.dart';
 
-class LoginScreen extends StatelessWidget {
-  final String? userIputName;
-  LoginScreen({super.key, this.userIputName});
-
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-  // String userIputName = "";
+class VerifyOtpScreen extends StatefulWidget {
+  final String? email;
+  VerifyOtpScreen({super.key, this.email});
 
   @override
+  State<VerifyOtpScreen> createState() => _VerifyOtpScreenState();
+}
+
+class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
+  TextEditingController pinController = TextEditingController();
+
+  String currentText = "";
+  @override
   Widget build(BuildContext context) {
+    log("email from login:${widget.email}");
     final providerWatch = context.watch<CounterProvider>();
     final providerRead = context.read<CounterProvider>();
     final authProvider = context.read<AuthViewModel>();
@@ -54,14 +60,14 @@ class LoginScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                "Let's Sign you in. ",
+                "Verify your account ",
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
               const SizedBox(
                 height: 20,
               ),
               const Text(
-                "Welcome back ",
+                "Enter the opt code",
                 style: TextStyle(
                   fontSize: 27,
                   fontWeight: FontWeight.w400,
@@ -72,7 +78,7 @@ class LoginScreen extends StatelessWidget {
                 height: 10,
               ),
               const Text(
-                "You've been missed! ",
+                "to verify your account",
                 style: TextStyle(
                     fontSize: 27,
                     fontWeight: FontWeight.w400,
@@ -86,68 +92,43 @@ class LoginScreen extends StatelessWidget {
                 height: 20,
               ),
               //
-              CustomTextField(
-                hint: "Enter email",
-                controller: emailController,
-                prefix: const Icon(Icons.mail_outline_outlined),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CustomTextField(
-                hint: "Enter password",
-                visibility: providerWatch.isVisibility,
-                controller: passwordController,
-                prefix: const Icon(Icons.lock_open_outlined),
-                suffix: IconButton(
-                    onPressed: () {
-                      providerRead.togglePassword();
-                    },
-                    icon: Icon(
-                      providerWatch.isVisibility
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                    )),
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => VerifyOtpScreen(
-                                email: emailController.text,
-                              )));
-                },
-                child: const Text(
-                  "Account not verified? Veify now",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
+              PinCodeTextField(
+                appContext: context,
+                length: 4,
+                obscureText: false,
+                animationType: AnimationType.fade,
+
+                pinTheme: PinTheme(
+                  inactiveColor: Colors.blue,
+                  inactiveFillColor: Colors.white,
+                  activeColor: Colors.grey.withOpacity(0.5),
+                  selectedColor: Colors.grey.withOpacity(0.5),
+                  shape: PinCodeFieldShape.box,
+                  borderRadius: BorderRadius.circular(5),
+                  fieldHeight: 50,
+                  fieldWidth: 40,
+                  activeFillColor: Colors.white,
                 ),
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              GestureDetector(
-                onTap: () {
-                  authProvider.resendyOtpLogic(
-                    emailController.text,
-                    context,
-                  );
+                animationDuration: Duration(milliseconds: 300),
+                // backgroundColor: Colors.blue.shade50,
+                enableActiveFill: true,
+                // errorAnimationController: errorController,
+                controller: pinController,
+                onCompleted: (v) {
+                  print("Completed");
                 },
-                child: const Text(
-                  "Request for new Opt",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                ),
+                onChanged: (value) {
+                  print(value);
+                  setState(() {
+                    currentText = value;
+                  });
+                },
+                beforeTextPaste: (text) {
+                  print("Allowing to paste $text");
+                  //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                  //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                  return true;
+                },
               ),
               const SizedBox(
                 height: 40,
@@ -155,16 +136,17 @@ class LoginScreen extends StatelessWidget {
               CustomButton(
                 btnName: authProviderWatch.state == AuthState.loading
                     ? "Please wait ..."
-                    : "Login",
+                    : "Verify",
                 textColor: Colors.white,
                 btnColor: Colors.blue,
                 onPressed: () {
-                  authProvider.signInLogic(
-                    emailController.text,
-                    passwordController.text,
+                  log("pinController.text:${pinController.text}");
+                  authProvider.verifyOtpLogic(
+                    pinController.text,
+                    widget.email!,
                     context,
                   );
-                  passwordController.clear();
+                  pinController.clear();
                 },
               )
             ],
