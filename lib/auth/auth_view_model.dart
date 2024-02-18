@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_update/auth/auth_repository.dart';
-import 'package:project_update/models/school_model.dart';
+import 'package:project_update/features/task/models/school_model.dart';
 
 enum AuthState { idle, loading, success, error }
 

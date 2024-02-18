@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:project_update/auth/auth_view_model.dart';
-import 'package:project_update/models/school_model.dart';
+import 'package:project_update/features/task/models/school_model.dart';
 import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {

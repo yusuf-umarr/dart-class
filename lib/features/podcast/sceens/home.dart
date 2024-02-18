@@ -1,40 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:project_update/screens/board.dart';
-import 'package:project_update/screens/dashboard.dart';
-import 'package:project_update/screens/message.dart';
-import 'package:project_update/screens/profile.dart';
+import 'package:project_update/features/podcast/sceens/podcast_dashboard.dart';
+import 'package:project_update/features/task/screens/board.dart';
+import 'package:project_update/features/task/screens/dashboard.dart';
+import 'package:project_update/features/task/screens/message.dart';
+import 'package:project_update/features/task/screens/profile.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class PodCastHome extends StatefulWidget {
+  const PodCastHome({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<PodCastHome> createState() => _PodCastHomeState();
 }
 
-class _HomeState extends State<Home> {
-  final homeNavKey = GlobalKey<NavigatorState>();
-  final boardNavKey = GlobalKey<NavigatorState>();
-  final messageNavKey = GlobalKey<NavigatorState>();
-  final profileNavKey = GlobalKey<NavigatorState>();
+class _PodCastHomeState extends State<PodCastHome> {
   int selectedTab = 0;
+
+  List<Widget> pages = [
+    const PodcastDashboard(),
+    Container(),
+    Container(),
+    Container(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          child: IndexedStack(
-            index: selectedTab,
-            children: const [
-              Dashboard(),
-              Board(),
-              Message(),
-              Profile(),
-            ],
-          ),
-        ),
-      ),
+      body: pages[selectedTab],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: selectedTab,

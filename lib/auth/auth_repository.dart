@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:project_update/models/school_model.dart';
+import 'package:project_update/features/task/models/school_model.dart';
 
 class AuthRepository {
   Future<ApiResponse<List<SchoolModel>>> getSchool() async {

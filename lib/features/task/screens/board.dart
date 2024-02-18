@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_update/screens/home.dart';
+import 'package:project_update/features/task/screens/home.dart';
 
 class Board extends StatefulWidget {
   const Board({super.key});
